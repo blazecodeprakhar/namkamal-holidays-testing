@@ -10,6 +10,7 @@ import { DOMESTIC_DESTINATIONS, INTERNATIONAL_DESTINATIONS } from '../data/desti
 import { PACKAGES_DATA } from '../data/packages';
 import { CUSTOMER_REVIEWS } from '../data/reviews';
 import { UserAvatar } from '../components/UserAvatar';
+import { PcHeroSlider } from '../components/PcHeroSlider';
 
 interface HomePageProps {
   onOpenEnquiry: (prefillDestination?: string) => void;
@@ -25,8 +26,13 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenEnquiry }) => {
         description="Discover India & International holiday packages with Namkamal Holidays. Explore Rajasthan, Kerala, Goa, Kashmir, Gujarat, Himachal, Dubai, Thailand, Bali, Singapore, Maldives & Switzerland."
       />
 
-      {/* Hero Section */}
-      <section className="relative min-h-[85vh] flex items-center justify-center text-white overflow-hidden bg-gray-950">
+      {/* PC Hero Section - Image Slider only for PC / Desktop Users */}
+      <section className="hidden md:block w-full">
+        <PcHeroSlider onOpenEnquiry={onOpenEnquiry} />
+      </section>
+
+      {/* Phone/Mobile Hero Section - Kept unchanged for Mobile Users */}
+      <section className="block md:hidden relative min-h-[85vh] flex items-center justify-center text-white overflow-hidden bg-gray-950">
         {/* Background Image */}
         <img 
           src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=2000&q=85" 
