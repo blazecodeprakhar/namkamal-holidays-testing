@@ -49,7 +49,7 @@ export function App() {
     <Router>
       <ScrollToTop />
       <div className="min-h-screen bg-white font-sans flex flex-col justify-between selection:bg-[#F7941D] selection:text-white">
-        
+
         {/* Header */}
         <Header onOpenEnquiry={handleOpenEnquiry} />
 
@@ -59,15 +59,15 @@ export function App() {
             <Route path="/" element={<HomePage onOpenEnquiry={handleOpenEnquiry} />} />
             <Route path="/about" element={<AboutPage onOpenEnquiry={handleOpenEnquiry} />} />
             <Route path="/services" element={<ServicesPage onOpenEnquiry={handleOpenEnquiry} />} />
-            
+
             {/* Destination Hubs */}
             <Route path="/destinations/domestic" element={<DomesticHubPage onOpenEnquiry={handleOpenEnquiry} />} />
             <Route path="/destinations/international" element={<InternationalHubPage onOpenEnquiry={handleOpenEnquiry} />} />
             <Route path="/destinations/:category/:id" element={<DestinationDetailPage onOpenEnquiry={handleOpenEnquiry} />} />
-            
+
             {/* Package Details */}
             <Route path="/packages/:slug" element={<PackageDetailPage onOpenEnquiry={handleOpenEnquiry} />} />
-            
+
             {/* Other Key Pages */}
             <Route path="/reviews" element={<ReviewsPage />} />
             <Route path="/contact" element={<ContactPage />} />
@@ -92,10 +92,10 @@ export function App() {
         <FloatingWhatsApp onOpenEnquiry={() => handleOpenEnquiry()} />
 
         {/* Global Enquiry Modal */}
-        <EnquiryModal 
-          isOpen={isEnquiryModalOpen} 
-          onClose={handleCloseEnquiry} 
-          prefillDestination={prefilledDestination} 
+        <EnquiryModal
+          isOpen={isEnquiryModalOpen}
+          onClose={handleCloseEnquiry}
+          prefillDestination={prefilledDestination}
         />
 
       </div>
