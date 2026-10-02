@@ -22,7 +22,7 @@ const variants = {
     opacity: 1,
     scale: 1,
     transition: {
-      x: { type: 'spring', stiffness: 260, damping: 28 },
+      x: { type: 'spring' as const, stiffness: 260, damping: 28 },
       opacity: { duration: 0.35 },
       scale: { duration: 0.45 },
     },
@@ -33,7 +33,7 @@ const variants = {
     opacity: 0,
     scale: 0.98,
     transition: {
-      x: { type: 'spring', stiffness: 260, damping: 28 },
+      x: { type: 'spring' as const, stiffness: 260, damping: 28 },
       opacity: { duration: 0.35 },
       scale: { duration: 0.45 },
     },
@@ -181,7 +181,7 @@ export const PcHeroSlider: React.FC<PcHeroSliderProps> = ({ onOpenEnquiry }) => 
                 drag="x"
                 dragConstraints={{ left: 0, right: 0 }}
                 dragElastic={0.8}
-                onDragEnd={(e, { offset, velocity }) => {
+                onDragEnd={(_e, { offset, velocity }) => {
                   const swipe = swipePower(offset.x, velocity.x);
 
                   if (swipe < -swipeConfidenceThreshold || offset.x < -40) {
