@@ -23,8 +23,8 @@ const variants = {
     scale: 1,
     transition: {
       x: { type: 'spring' as const, stiffness: 260, damping: 28 },
-      opacity: { duration: 0.35 },
-      scale: { duration: 0.45 },
+      opacity: { duration: 0.4 },
+      scale: { duration: 0.5 },
     },
   },
   exit: (direction: number) => ({
@@ -34,8 +34,8 @@ const variants = {
     scale: 0.98,
     transition: {
       x: { type: 'spring' as const, stiffness: 260, damping: 28 },
-      opacity: { duration: 0.35 },
-      scale: { duration: 0.45 },
+      opacity: { duration: 0.4 },
+      scale: { duration: 0.5 },
     },
   }),
 };
@@ -66,6 +66,14 @@ export const PcHeroSlider: React.FC<PcHeroSliderProps> = ({ onOpenEnquiry }) => 
     setPage([targetIndex, dir]);
   };
 
+  // Instant background preloading of all 5 slide images on component mount
+  useEffect(() => {
+    HERO_IMAGES.forEach((img) => {
+      const imageObj = new Image();
+      imageObj.src = img.src;
+    });
+  }, []);
+
   // Auto-play timer for infinite looping
   useEffect(() => {
     if (isHovered) return;
@@ -81,6 +89,13 @@ export const PcHeroSlider: React.FC<PcHeroSliderProps> = ({ onOpenEnquiry }) => 
       className="relative min-h-[85vh] flex flex-col items-center justify-center text-white overflow-hidden bg-gray-950 py-10 px-4 sm:px-6 lg:px-8 select-none"
       onContextMenu={(e) => e.preventDefault()}
     >
+      {/* Invisible DOM preloader element so browser caches all 5 slide images immediately */}
+      <div className="hidden" aria-hidden="true">
+        {HERO_IMAGES.map((img) => (
+          <img key={img.id} src={img.src} alt="" />
+        ))}
+      </div>
+
       {/* Background Image (Original Hero Pattern) */}
       <img
         src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=2000&q=85"
@@ -96,8 +111,13 @@ export const PcHeroSlider: React.FC<PcHeroSliderProps> = ({ onOpenEnquiry }) => 
       <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-[750px] h-[750px] bg-gradient-to-tr from-[#F7941D]/25 to-[#E91E63]/25 rounded-full blur-3xl opacity-70 pointer-events-none" />
       <div className="absolute bottom-10 right-10 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
 
-      {/* Hero Header Content (Text + Buttons) */}
-      <div className="relative max-w-4xl mx-auto text-center z-10 mb-8 animate-fade-in-up">
+      {/* Hero Header Content (Text + Buttons) with initial entrance animation */}
+      <motion.div 
+        initial={{ opacity: 0, y: 18 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+        className="relative max-w-4xl mx-auto text-center z-10 mb-8"
+      >
         {/* Floating Savings Badge */}
         <div className="inline-flex items-center gap-2 px-4.5 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-[#F7941D] text-xs sm:text-sm font-bold uppercase tracking-widest mb-4 shadow-2xl animate-float">
           <ShieldCheck className="w-4 h-4 text-emerald-400" /> Save More on Your Holidays
@@ -130,10 +150,13 @@ export const PcHeroSlider: React.FC<PcHeroSliderProps> = ({ onOpenEnquiry }) => 
             Explore Packages <ArrowRight className="w-4 h-4 text-[#F7941D]" />
           </a>
         </div>
-      </div>
+      </motion.div>
 
-      {/* Slides Window Wrapper (with Left/Right Arrows, Touch/Click-Hold Drag, and Dots) */}
-      <div 
+      {/* Slides Window Wrapper with 1st boot fade & scale entrance */}
+      <motion.div 
+        initial={{ opacity: 0, y: 24, scale: 0.96 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
         className="relative z-20 w-full max-w-5xl mx-auto flex flex-col items-center group"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => {
@@ -263,7 +286,7 @@ export const PcHeroSlider: React.FC<PcHeroSliderProps> = ({ onOpenEnquiry }) => 
             );
           })}
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 };
