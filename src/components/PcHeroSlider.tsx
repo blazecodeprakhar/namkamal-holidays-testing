@@ -90,9 +90,9 @@ export const PcHeroSlider: React.FC<PcHeroSliderProps> = () => {
         ))}
       </div>
 
-      {/* Pure Seamless 1200 x 587 px Hero Slide with White Background */}
+      {/* Pure Seamless Full-Width Hero Slide */}
       <div 
-        className="relative w-full aspect-[1200/587] max-w-[1200px] mx-auto overflow-hidden touch-pan-y group bg-white"
+        className="relative w-full aspect-[1200/587] overflow-hidden touch-pan-y group bg-white"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => {
           setIsHovered(false);
